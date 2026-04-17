@@ -229,7 +229,7 @@ export type ModelEndpointsResponse = z.infer<typeof ModelEndpointsResponseSchema
 
 export const ProviderSchema = z
   .object({
-    id: z.string(),
+    slug: z.string().optional(),
     name: z.string().optional(),
     status: z.string().optional(),
     models_count: z.number().optional(),

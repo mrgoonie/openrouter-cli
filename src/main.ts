@@ -108,9 +108,11 @@ const main = defineCommand({
     video: videoCommand,
   },
   async run({ args }) {
+    // Citty invokes this root handler before (not instead of) a matched
+    // subcommand — so keep work here minimal and produce no stdout noise.
+    // The banner only renders when no subcommand is present.
     const resolverCtx = buildResolverContext({ config: args.config });
-
-    const _ctx = buildContext(
+    buildContext(
       {
         apiKey: args['api-key'],
         managementKey: args['management-key'],
@@ -129,8 +131,32 @@ const main = defineCommand({
       resolverCtx,
     );
 
-    console.log(`openrouter v${VERSION}`);
-    console.log('Run `openrouter --help` for usage.');
+    const hasSubcommand = process.argv
+      .slice(2)
+      .some((a) =>
+        [
+          'analytics',
+          'auth',
+          'chat',
+          'completion',
+          'config',
+          'credits',
+          'embeddings',
+          'generations',
+          'guardrails',
+          'keys',
+          'models',
+          'org',
+          'providers',
+          'rerank',
+          'responses',
+          'video',
+        ].includes(a),
+      );
+    if (!hasSubcommand) {
+      console.log(`openrouter v${VERSION}`);
+      console.log('Run `openrouter --help` for usage.');
+    }
   },
 });
 
