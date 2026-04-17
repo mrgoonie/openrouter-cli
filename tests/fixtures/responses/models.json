@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "id": "openai/gpt-4o",
+      "name": "GPT-4o",
+      "description": "OpenAI's latest flagship model",
+      "context_length": 128000,
+      "pricing": { "prompt": "0.000005", "completion": "0.000015" },
+      "architecture": { "modality": "text", "tokenizer": "cl100k" }
+    },
+    {
+      "id": "anthropic/claude-3-5-sonnet",
+      "name": "Claude 3.5 Sonnet",
+      "description": "Anthropic's balanced model",
+      "context_length": 200000,
+      "pricing": { "prompt": "0.000003", "completion": "0.000015" }
+    }
+  ]
+}

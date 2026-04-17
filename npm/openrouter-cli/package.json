@@ -1,0 +1,22 @@
+{
+  "name": "openrouter-cli",
+  "version": "0.0.0",
+  "description": "OpenRouter CLI — agent + human friendly wrapper for the full OpenRouter API",
+  "bin": {
+    "openrouter": "bin/openrouter.cjs"
+  },
+  "scripts": {
+    "postinstall": "node bin/openrouter.cjs --install"
+  },
+  "files": ["bin"],
+  "keywords": ["openrouter", "cli", "ai", "llm"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openrouter/openrouter-cli.git"
+  },
+  "homepage": "https://github.com/openrouter/openrouter-cli#readme",
+  "engines": {
+    "node": ">=18"
+  }
+}

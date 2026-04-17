@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "user_mock_001",
+      "email": "alice@example.com",
+      "name": "Alice",
+      "role": "admin",
+      "joined_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "user_mock_002",
+      "email": "bob@example.com",
+      "name": "Bob",
+      "role": "member",
+      "joined_at": "2026-02-01T00:00:00Z"
+    }
+  ]
+}

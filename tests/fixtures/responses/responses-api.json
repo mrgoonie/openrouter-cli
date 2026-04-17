@@ -1,0 +1,12 @@
+{
+  "id": "resp-mock-001",
+  "model": "openai/gpt-4o",
+  "output": [
+    {
+      "type": "message",
+      "role": "assistant",
+      "content": [{ "type": "output_text", "text": "Mock response output" }]
+    }
+  ],
+  "usage": { "input_tokens": 10, "output_tokens": 12, "total_tokens": 22 }
+}

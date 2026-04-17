@@ -1,0 +1,5 @@
+{
+  "data": [{ "object": "embedding", "embedding": [0.1, 0.2, 0.3, 0.4, 0.5], "index": 0 }],
+  "model": "openai/text-embedding-ada-002",
+  "usage": { "prompt_tokens": 5, "total_tokens": 5, "cost": 0.000001 }
+}

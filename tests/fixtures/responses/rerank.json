@@ -1,0 +1,8 @@
+{
+  "results": [
+    { "index": 0, "relevance_score": 0.95, "document": { "text": "First doc" } },
+    { "index": 1, "relevance_score": 0.72, "document": { "text": "Second doc" } }
+  ],
+  "model": "cohere/rerank-english-v3.0",
+  "usage": { "total_tokens": 30 }
+}

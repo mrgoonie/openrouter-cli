@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "plans": [
+    {
+      "dir": "plans/260417-1441-openrouter-cli",
+      "title": "OpenRouter CLI — Bun/TS wrapping all 16 endpoint groups",
+      "status": "pending",
+      "priority": "P2",
+      "created": "2026-04-17T08:48:50.092Z",
+      "createdBy": "ck:plan",
+      "source": "skill",
+      "lastModified": "2026-04-17T08:48:50.092Z",
+      "phases": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "progressPct": 0
+    }
+  ],
+  "stats": {
+    "totalPlans": 1,
+    "completedPlans": 0,
+    "avgPhasesPerPlan": 12
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "data": {
+    "id": "openai/gpt-4o",
+    "endpoints": [
+      {
+        "name": "OpenAI",
+        "context_length": 128000,
+        "pricing": { "prompt": "0.000005", "completion": "0.000015" },
+        "uptime_last_30d": 0.999
+      }
+    ]
+  }
+}

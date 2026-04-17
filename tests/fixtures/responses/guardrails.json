@@ -1,0 +1,6 @@
+{
+  "data": [
+    { "id": "guard_mock_001", "name": "PII Blocker" },
+    { "id": "guard_mock_002", "name": "Toxic Content Filter" }
+  ]
+}

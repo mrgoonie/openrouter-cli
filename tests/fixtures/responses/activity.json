@@ -1,0 +1,6 @@
+{
+  "data": [
+    { "endpoint": "/chat/completions", "requests": 42, "tokens": 8500, "cost": 0.042 },
+    { "endpoint": "/embeddings", "requests": 10, "tokens": 500, "cost": 0.0005 }
+  ]
+}

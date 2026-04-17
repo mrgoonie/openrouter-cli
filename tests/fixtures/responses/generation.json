@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": "gen-mock-001",
+    "model": "openai/gpt-4o",
+    "tokens_prompt": 10,
+    "tokens_completion": 20,
+    "native_tokens_prompt": null,
+    "native_tokens_completion": null,
+    "total_cost": 0.00015,
+    "created_at": "2026-04-17T12:00:00Z"
+  }
+}

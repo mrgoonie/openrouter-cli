@@ -1,0 +1,6 @@
+{
+  "data": [
+    { "id": "openai", "name": "OpenAI", "status": "ok", "models_count": 10 },
+    { "id": "anthropic", "name": "Anthropic", "status": "ok", "models_count": 5 }
+  ]
+}
