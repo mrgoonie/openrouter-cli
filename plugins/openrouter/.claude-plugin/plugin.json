@@ -1,0 +1,13 @@
+{
+  "name": "openrouter",
+  "version": "0.1.0",
+  "description": "Use the @mrgoonie/openrouter CLI with best practices: JSON/NDJSON output, config cascade, stable exit codes, and common agent workflows for chat, embeddings, rerank, and video.",
+  "author": {
+    "name": "mrgoonie",
+    "url": "https://github.com/mrgoonie/openrouter-cli"
+  },
+  "homepage": "https://github.com/mrgoonie/openrouter-cli",
+  "repository": "https://github.com/mrgoonie/openrouter-cli",
+  "license": "MIT",
+  "keywords": ["openrouter", "llm", "cli", "agent", "json", "streaming", "embeddings", "video"]
+}

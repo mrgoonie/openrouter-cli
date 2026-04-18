@@ -223,6 +223,20 @@ openrouter config doctor
 
 ---
 
+## Claude Code plugin
+
+This repo ships a [Claude Code](https://claude.com/claude-code) plugin that teaches agents how to drive the CLI with JSON envelopes, stable exit codes, NDJSON streaming, and common workflows (chat, embeddings, rerank, video).
+
+```bash
+# Inside Claude Code:
+/plugin marketplace add https://github.com/mrgoonie/openrouter-cli
+/plugin install openrouter@openrouter-cli
+```
+
+Source: [`plugins/openrouter`](plugins/openrouter) · Marketplace manifest: [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
+
+---
+
 ## Docs
 
 - [Project Overview & PDR](docs/project-overview-pdr.md) — vision, target users, success metrics

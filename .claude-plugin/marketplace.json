@@ -1,0 +1,22 @@
+{
+  "name": "openrouter-cli",
+  "owner": {
+    "name": "mrgoonie",
+    "url": "https://github.com/mrgoonie"
+  },
+  "metadata": {
+    "description": "Claude Code plugins for the OpenRouter CLI — agent-friendly workflows for chat, embeddings, video, keys, and config.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "openrouter",
+      "source": "./plugins/openrouter",
+      "description": "Use the @mrgoonie/openrouter CLI with best practices: JSON mode, streaming, config cascade, exit codes, and common agent workflows.",
+      "version": "0.1.0",
+      "category": "ai",
+      "tags": ["openrouter", "llm", "cli", "agent", "json"],
+      "keywords": ["openrouter", "chat", "embeddings", "rerank", "video", "models"]
+    }
+  ]
+}
