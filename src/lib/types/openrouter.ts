@@ -327,12 +327,8 @@ export const VideoCreateRequestSchema = z
   .passthrough();
 export type VideoCreateRequest = z.infer<typeof VideoCreateRequestSchema>;
 
-/** Response shape for POST /videos (202 Accepted). */
-export const VideoCreateResponseSchema = z
-  .object({
-    data: VideoJobSchema,
-  })
-  .passthrough();
+/** Response shape for POST /videos (202 Accepted) — flat job object, no wrapper. */
+export const VideoCreateResponseSchema = VideoJobSchema;
 export type VideoCreateResponse = z.infer<typeof VideoCreateResponseSchema>;
 
 // ---------------------------------------------------------------------------
