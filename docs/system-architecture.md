@@ -99,6 +99,36 @@ src/
 
 All formats wrap data in `schema_version: "1"` envelope for json/ndjson.
 
+### JSON Envelope Structure
+
+**Standard envelope** (most commands):
+```json
+{
+  "schema_version": "1",
+  "data": { /* command-specific data */ },
+  "meta": { "ok": true, "execution_time_ms": 123 }
+}
+```
+
+**Config doctor envelope** (fixed 2026-04-18):
+```json
+{
+  "schema_version": "1",
+  "data": [
+    { "name": "api_key", "source": "keychain", "value": "sk-or-v1-****abcd", "valid": true },
+    { "name": "base_url", "source": "default", "value": "https://openrouter.ai/api", "valid": true }
+  ],
+  "meta": {
+    "ok": true,
+    "execution_time_ms": 42,
+    "config_file": { "exists": true, "path": "/home/user/.config/openrouter.toml" },
+    "keychain": { "available": true }
+  }
+}
+```
+
+Consumers must use `envelope.data.find(r => r.name === 'api_key')` and `envelope.meta.config_file`/`envelope.meta.keychain` — NOT `envelope.data.config_file`.
+
 ## Binary Build
 
 ```

@@ -6,6 +6,7 @@ export type Meta = {
   request_id?: string;
   elapsed_ms?: number;
   generation_id?: string;
+  [key: string]: unknown;
 };
 
 export type ErrorDetail = {

@@ -101,9 +101,24 @@ export function writeConfigFile(patch: Partial<Config>): void {
   }
 
   const merged = deepMerge(existing, patch as Record<string, unknown>);
-  const tomlStr = tomlStringify(merged);
+  atomicWriteToml(p, merged);
+}
 
-  // Atomic write: write to .tmp, then rename
+/**
+ * Rewrite the entire config file verbatim (no deep-merge).
+ * Required for deletions to propagate — `writeConfigFile` would preserve
+ * keys whose containing object becomes empty after an `unset`.
+ */
+export function rewriteConfigFile(config: Config): void {
+  const p = configPath();
+  const dir = path.dirname(p);
+  fs.mkdirSync(dir, { recursive: true });
+  atomicWriteToml(p, config as Record<string, unknown>);
+}
+
+/** Write `obj` as TOML to `p` atomically via tmp file + rename. */
+function atomicWriteToml(p: string, obj: Record<string, unknown>): void {
+  const tomlStr = tomlStringify(obj);
   const tmp = `${p}.tmp`;
   fs.writeFileSync(tmp, tomlStr, 'utf8');
   fs.renameSync(tmp, p);

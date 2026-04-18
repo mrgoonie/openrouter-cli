@@ -13,7 +13,12 @@
 import * as fs from 'node:fs';
 import { defineCommand } from 'citty';
 import { maskKey } from '../lib/auth/mask-key.ts';
-import { configPath, readConfigFile, writeConfigFile } from '../lib/config/file.ts';
+import {
+  configPath,
+  readConfigFile,
+  rewriteConfigFile,
+  writeConfigFile,
+} from '../lib/config/file.ts';
 import { isKeychainAvailable } from '../lib/config/keychain.ts';
 import { getByPath, parseValue, setByPath, unsetByPath } from '../lib/config/kv-path.ts';
 import {
@@ -135,7 +140,16 @@ const unsetCommand = defineCommand({
     void ctx;
     const parsed = readConfigFile() as Record<string, unknown>;
     const next = unsetByPath(parsed, args.key);
-    writeConfigFile(next);
+    // Rewrite (not merge) — deletions must replace the file verbatim,
+    // otherwise deep-merge would resurrect the removed key from disk.
+    const validation = ConfigSchema.safeParse(next);
+    if (!validation.success) {
+      const issues = validation.error.issues
+        .map((i) => `  ${i.path.join('.')}: ${i.message}`)
+        .join('\n');
+      throw new CliError('usage', `Config validation failed:\n${issues}`);
+    }
+    rewriteConfigFile(validation.data);
     process.stderr.write(`Unset ${args.key}\n`);
   },
 });
@@ -285,12 +299,11 @@ const doctorCommand = defineCommand({
 
     render(
       {
-        data: {
-          vars: rows,
+        data: rows,
+        meta: {
           config_file: { path: cfgPath, exists: cfgExists, valid: cfgValid },
           keychain: { available: keychainAvailable },
         },
-        meta: {},
       },
       {
         format: outputMode,
