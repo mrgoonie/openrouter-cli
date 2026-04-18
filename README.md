@@ -42,19 +42,19 @@ brew install openrouter/tap/openrouter
 ### Curl script
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/user/openrouter-cli/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/mrgoonie/openrouter-cli/main/install.sh | sh
 ```
 
 ### npm
 
 ```bash
-npm install -g openrouter-cli
+npm install -g @mrgoonie/openrouter-cli
 ```
 
 ### From source (requires Bun ≥ 1.1.38)
 
 ```bash
-git clone https://github.com/user/openrouter-cli
+git clone https://github.com/mrgoonie/openrouter-cli
 cd openrouter-cli
 bun install
 bun run build        # outputs bin/openrouter

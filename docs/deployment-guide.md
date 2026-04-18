@@ -11,7 +11,7 @@ brew install openrouter/tap/openrouter
 ### Curl (Linux / macOS — one-liner)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/user/openrouter-cli/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/mrgoonie/openrouter-cli/main/install.sh | sh
 ```
 
 The script detects OS/arch, downloads the matching binary from the latest GitHub release, and installs to `/usr/local/bin/openrouter`.
@@ -19,9 +19,9 @@ The script detects OS/arch, downloads the matching binary from the latest GitHub
 ### npm / npx
 
 ```bash
-npm install -g openrouter-cli
+npm install -g @mrgoonie/openrouter-cli
 # or run without installing:
-npx openrouter-cli --help
+npx @mrgoonie/openrouter-cli --help
 ```
 
 ### Build from Source
@@ -29,7 +29,7 @@ npx openrouter-cli --help
 Requires Bun ≥ 1.1.38.
 
 ```bash
-git clone https://github.com/user/openrouter-cli
+git clone https://github.com/mrgoonie/openrouter-cli
 cd openrouter-cli
 bun install
 bun run build          # outputs bin/openrouter
@@ -98,7 +98,7 @@ ls -lh bin/
 If a bad release is published:
 
 1. Delete the GitHub release and tag
-2. `npm unpublish openrouter-cli@X.Y.Z --force`
+2. `npm unpublish @mrgoonie/openrouter-cli@X.Y.Z --force`
 3. Revert the Homebrew formula PR
 
 ### Binary Naming Convention
