@@ -19,19 +19,18 @@ describe.skipIf(skipIfNoKey('user'))('chat (integration)', () => {
   }, 120_000);
 
   test('streaming pretty mode prints content', async () => {
-    const res = await spawnCli(
-      ['chat', '-m', FREE_CHAT_MODEL, '--stream', 'Reply with: ok'],
-      { timeoutMs: 90_000 },
-    );
+    const res = await spawnCli(['chat', '-m', FREE_CHAT_MODEL, '--stream', 'Reply with: ok'], {
+      timeoutMs: 90_000,
+    });
     expect(res.exitCode).toBe(0);
     expect(res.stdout.length).toBeGreaterThan(0);
   }, 120_000);
 
   test('stdin message via "-" works', async () => {
-    const res = await spawnCli(
-      ['chat', '-m', FREE_CHAT_MODEL, '--no-stream', '-o', 'json', '-'],
-      { stdin: 'Say hello.', timeoutMs: 90_000 },
-    );
+    const res = await spawnCli(['chat', '-m', FREE_CHAT_MODEL, '--no-stream', '-o', 'json', '-'], {
+      stdin: 'Say hello.',
+      timeoutMs: 90_000,
+    });
     expect(res.exitCode).toBe(0);
   }, 120_000);
 

@@ -7,9 +7,24 @@ import { RERANK_MODEL, skipIfNoKey, spawnCli } from './harness.ts';
 
 describe.skipIf(skipIfNoKey('user'))('rerank (integration)', () => {
   test('run returns ranked results (JSON)', async () => {
-    const docs = ['Paris is the capital of France.', 'Bananas are yellow.', 'The Eiffel Tower is in Paris.'].join('\n');
+    const docs = [
+      'Paris is the capital of France.',
+      'Bananas are yellow.',
+      'The Eiffel Tower is in Paris.',
+    ].join('\n');
     const res = await spawnCli(
-      ['rerank', 'run', '--model', RERANK_MODEL, '--query', 'What is the capital of France?', '--docs', '-', '-o', 'json'],
+      [
+        'rerank',
+        'run',
+        '--model',
+        RERANK_MODEL,
+        '--query',
+        'What is the capital of France?',
+        '--docs',
+        '-',
+        '-o',
+        'json',
+      ],
       { stdin: docs, timeoutMs: 60_000 },
     );
     // Some accounts may not have rerank access — allow graceful skip

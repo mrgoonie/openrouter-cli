@@ -41,7 +41,7 @@ export const EMBED_MODEL = 'openai/text-embedding-3-small';
 export const RERANK_MODEL = 'cohere/rerank-english-v3.0';
 
 export function hasUserKey(): boolean {
-  return Boolean(USER_KEY && USER_KEY.startsWith('sk-or-'));
+  return Boolean(USER_KEY?.startsWith('sk-or-'));
 }
 
 export function hasMgmtKey(): boolean {

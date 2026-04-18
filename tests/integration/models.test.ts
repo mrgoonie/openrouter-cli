@@ -12,7 +12,7 @@ describe.skipIf(skipIfNoKey('user'))('models (integration)', () => {
     const parsed = tryParseJson<{ data: unknown[] }>(res.stdout);
     expect(parsed).not.toBeNull();
     expect(Array.isArray(parsed?.data)).toBe(true);
-    expect((parsed?.data.length ?? 0)).toBeGreaterThan(0);
+    expect(parsed?.data.length ?? 0).toBeGreaterThan(0);
   }, 60_000);
 
   test('get known model returns details', async () => {
