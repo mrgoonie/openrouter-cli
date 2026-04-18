@@ -229,16 +229,23 @@ async function handleRequest(req: BunRequest): Promise<Response> {
   }
 
   // Video endpoints with state machine
+  // API contract: flat response (no {data:...} envelope); polling path is /videos/:id
   if (method === 'POST' && pathname === '/videos') {
-    const initial = fixture('video-create') as { data: { id: string } };
-    const jobId = initial.data.id;
-    videoState.set(jobId, { polls: 0 });
+    const initial = fixture('video-create') as { id: string };
+    videoState.set(initial.id, { polls: 0 });
     return json(initial, 202);
   }
 
-  const videoStatusMatch = matchPath('/videos/:id/status', pathname);
-  if (method === 'GET' && videoStatusMatch) {
-    const jobId = videoStatusMatch.id ?? 'unknown';
+  const videoUnsignedMatch = matchPath('/videos/:id/unsigned_urls', pathname);
+  if (method === 'GET' && videoUnsignedMatch) {
+    return json({
+      data: [{ file_name: 'output.mp4', unsigned_url: 'https://cdn.example.com/vid_mock_1.mp4' }],
+    });
+  }
+
+  const videoIdMatch = matchPath('/videos/:id', pathname);
+  if (method === 'GET' && videoIdMatch) {
+    const jobId = videoIdMatch.id ?? 'unknown';
     const state = videoState.get(jobId) ?? { polls: 0 };
     state.polls += 1;
     videoState.set(jobId, state);
@@ -253,26 +260,12 @@ async function handleRequest(req: BunRequest): Promise<Response> {
       status = 'completed';
     }
 
-    const base = fixture('video-create') as { data: Record<string, unknown> };
-    const jobData = { ...base.data, id: jobId, status };
+    const base = fixture('video-create') as Record<string, unknown>;
+    const jobData: Record<string, unknown> = { ...base, id: jobId, status };
     if (status === 'completed') {
-      (jobData as Record<string, unknown>).unsigned_urls = [
-        'https://cdn.example.com/vid_mock_1.mp4',
-      ];
+      jobData.unsigned_urls = ['https://cdn.example.com/vid_mock_1.mp4'];
     }
-    return json({ data: jobData });
-  }
-
-  const videoUnsignedMatch = matchPath('/videos/:id/unsigned_urls', pathname);
-  if (method === 'GET' && videoUnsignedMatch) {
-    return json({
-      data: [{ file_name: 'output.mp4', unsigned_url: 'https://cdn.example.com/vid_mock_1.mp4' }],
-    });
-  }
-
-  const videoIdMatch = matchPath('/videos/:id', pathname);
-  if (method === 'GET' && videoIdMatch) {
-    return json(fixture('video-completed'));
+    return json(jobData);
   }
 
   // POST /auth/keys (OAuth PKCE exchange)
