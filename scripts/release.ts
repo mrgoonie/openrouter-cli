@@ -152,9 +152,20 @@ if (!npmToken) {
   warn('NPM_TOKEN not set — skipping npm publish.');
 } else {
   log('Publishing npm wrapper package...');
+
+  // Sync wrapper package version with release tag
+  const wrapperPkgPath = 'npm/openrouter-cli/package.json';
+  const wrapperPkg = JSON.parse(readFileSync(wrapperPkgPath, 'utf8'));
+  wrapperPkg.version = version;
+  await Bun.write(wrapperPkgPath, `${JSON.stringify(wrapperPkg, null, 2)}\n`);
+  log(`Synced wrapper package version → ${version}`);
+
+  // Write .npmrc with token for auth
+  const npmrcPath = 'npm/openrouter-cli/.npmrc';
+  await Bun.write(npmrcPath, `//registry.npmjs.org/:_authToken=${npmToken}\n`);
+
   const npmResult = await run(['npm', 'publish', '--access', 'public'], {
     cwd: 'npm/openrouter-cli',
-    env: { NODE_AUTH_TOKEN: npmToken },
   });
 
   if (npmResult.code !== 0) {
