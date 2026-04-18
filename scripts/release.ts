@@ -160,6 +160,16 @@ if (!npmToken) {
   await Bun.write(wrapperPkgPath, `${JSON.stringify(wrapperPkg, null, 2)}\n`);
   log(`Synced wrapper package version → ${version}`);
 
+  // Copy README + LICENSE from repo root into wrapper so npmjs.com renders them
+  if (existsSync('README.md')) {
+    await Bun.write('npm/openrouter-cli/README.md', readFileSync('README.md', 'utf8'));
+    log('Copied README.md into wrapper');
+  }
+  if (existsSync('LICENSE')) {
+    await Bun.write('npm/openrouter-cli/LICENSE', readFileSync('LICENSE', 'utf8'));
+    log('Copied LICENSE into wrapper');
+  }
+
   // Write .npmrc with token for auth
   const npmrcPath = 'npm/openrouter-cli/.npmrc';
   await Bun.write(npmrcPath, `//registry.npmjs.org/:_authToken=${npmToken}\n`);

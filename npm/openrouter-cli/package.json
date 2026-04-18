@@ -8,7 +8,7 @@
   "scripts": {
     "postinstall": "node bin/install.cjs"
   },
-  "files": ["bin"],
+  "files": ["bin", "README.md", "LICENSE"],
   "keywords": ["openrouter", "cli", "ai", "llm"],
   "license": "MIT",
   "repository": {
