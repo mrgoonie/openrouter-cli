@@ -240,9 +240,17 @@ openrouter config doctor
 
 1. `git clone` + `bun install`
 2. `bun run dev -- --help` — verify CLI starts
-3. `bun test` — all tests must pass
-4. `bun run lint && bun run typecheck` — must be clean
-5. Read [Code Standards](docs/code-standards.md) before submitting a PR
+3. `bun run test` — unit tests (no network)
+4. `bun run test:integration` — real-API tests (requires `.env` with `OPENROUTER_API_KEY` and/or `OPENROUTER_MANAGEMENT_KEY`; per-suite auto-skip if a key is missing)
+5. `bun run lint && bun run typecheck` — must be clean
+6. Read [Code Standards](docs/code-standards.md) before submitting a PR
+
+### Integration tests
+
+Integration tests spawn the compiled CLI and hit the real OpenRouter API. They use free / cheap models (`meta-llama/llama-3.2-1b-instruct:free`, `google/gemini-2.0-flash-lite-001`, `openai/text-embedding-3-small`) to keep cost negligible.
+
+- Locally: put keys in `.env`, then `bun run test:integration`.
+- CI: configure `OPENROUTER_API_KEY` and `OPENROUTER_MANAGEMENT_KEY` as repo secrets. The `Integration Tests` workflow runs on `push` to `main` and via `workflow_dispatch`.
 
 ---
 
