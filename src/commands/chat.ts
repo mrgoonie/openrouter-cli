@@ -211,7 +211,7 @@ export default defineCommand({
       if (rest.length > 0) {
         args.message = rest.join(' ');
       } else {
-        args.message = undefined;
+        delete (args as Record<string, unknown>).message;
       }
     }
     await handleSend(args as Record<string, unknown>);
