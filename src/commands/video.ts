@@ -177,7 +177,7 @@ const createCommand = defineCommand({
       provider: args.provider as string | undefined,
     });
 
-    const result = await request<{ data: VideoJob }>({
+    const result = await request<VideoJob>({
       path: '/videos',
       method: 'POST',
       auth: 'user',
@@ -186,7 +186,7 @@ const createCommand = defineCommand({
       body,
     });
 
-    const job = result.data.data;
+    const job = result.data;
 
     if (!(args.wait as boolean)) {
       render(
@@ -208,16 +208,16 @@ const createCommand = defineCommand({
     const timeoutMs = args.timeout ? parseDuration(args.timeout as string) : undefined;
     const downloadDir = resolveDownloadDir(args as Record<string, unknown>);
 
-    const pollingUrl = job.polling_url ?? `/videos/${job.id}/status`;
+    const pollingUrl = job.polling_url ?? `/videos/${job.id}`;
     const fetchStatus = async () => {
-      const r = await request<{ data: VideoJob }>({
+      const r = await request<VideoJob>({
         path: pollingUrl,
         method: 'GET',
         auth: 'user',
         apiKey,
         baseUrl,
       });
-      return r.data.data;
+      return r.data;
     };
 
     try {
@@ -254,8 +254,8 @@ const statusCommand = defineCommand({
   async run({ args }) {
     const { apiKey, baseUrl, format } = resolveClientOpts(args as Record<string, unknown>);
 
-    const result = await request<{ data: VideoJob }>({
-      path: `/videos/${args.id as string}/status`,
+    const result = await request<VideoJob>({
+      path: `/videos/${args.id as string}`,
       method: 'GET',
       auth: 'user',
       apiKey,
@@ -264,7 +264,7 @@ const statusCommand = defineCommand({
 
     render(
       {
-        data: result.data.data,
+        data: result.data,
         meta: { request_id: result.requestId, elapsed_ms: result.elapsedMs },
       },
       { format },
@@ -296,14 +296,14 @@ const waitCommand = defineCommand({
     process.once('SIGINT', onSigint);
 
     const fetchStatus = async () => {
-      const r = await request<{ data: VideoJob }>({
-        path: `/videos/${jobId}/status`,
+      const r = await request<VideoJob>({
+        path: `/videos/${jobId}`,
         method: 'GET',
         auth: 'user',
         apiKey,
         baseUrl,
       });
-      return r.data.data;
+      return r.data;
     };
 
     const intervalMs = args.interval ? parseDuration(args.interval as string) : undefined;
@@ -345,15 +345,15 @@ const downloadCommand = defineCommand({
   async run({ args }) {
     const { apiKey, baseUrl, format } = resolveClientOpts(args as Record<string, unknown>);
 
-    const result = await request<{ data: VideoJob }>({
-      path: `/videos/${args.id as string}/status`,
+    const result = await request<VideoJob>({
+      path: `/videos/${args.id as string}`,
       method: 'GET',
       auth: 'user',
       apiKey,
       baseUrl,
     });
 
-    const job = result.data.data;
+    const job = result.data;
 
     if (job.status !== 'completed') {
       throw new CliError(

@@ -40,9 +40,12 @@ function buildUrl(base: string, path: string, query?: RequestOpts['query']): str
   // Concatenate rather than using `new URL(path, base)` — a path starting with
   // "/" would otherwise replace the base path (e.g. `/models` against
   // `https://openrouter.ai/api/v1/` yields `https://openrouter.ai/models`).
+  // If `path` is already an absolute URL (e.g. server-provided polling_url),
+  // use it as-is instead of concatenating onto `base`.
+  const isAbsolute = /^https?:\/\//i.test(path);
   const trimmedBase = base.replace(/\/+$/, '');
   const trimmedPath = path.startsWith('/') ? path : `/${path}`;
-  const url = new URL(`${trimmedBase}${trimmedPath}`);
+  const url = isAbsolute ? new URL(path) : new URL(`${trimmedBase}${trimmedPath}`);
   if (query) {
     for (const [k, v] of Object.entries(query)) {
       if (v !== undefined) url.searchParams.set(k, String(v));
@@ -107,12 +110,14 @@ export async function request<T>(opts: RequestOpts): Promise<RequestResult<T>> {
     })();
 
     try {
+      process.stderr.write(`[DEBUG] ${opts.method} ${url}\n`);
       const res = await fetch(url, {
         method: opts.method,
         headers,
         body: bodyStr,
         signal,
       });
+      process.stderr.write(`[DEBUG] -> ${res.status}\n`);
 
       clearTimeout(timer);
 
