@@ -1,0 +1,49 @@
+name: Integration Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/integration/**'
+      - 'package.json'
+      - 'bun.lock'
+      - '.github/workflows/integration.yml'
+
+jobs:
+  integration:
+    name: real-api integration
+    runs-on: ubuntu-latest
+    # Skip on forks / when secrets are not configured.
+    # skipIfNoKey() in the harness also guards per-suite, but bailing early saves runner minutes.
+    if: github.repository_owner != '' && github.event.repository.fork == false
+    timeout-minutes: 15
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      OPENROUTER_MANAGEMENT_KEY: ${{ secrets.OPENROUTER_MANAGEMENT_KEY }}
+      NO_COLOR: '1'
+      FORCE_COLOR: '0'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.38
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Verify secrets present
+        id: keys
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ] && [ -z "$OPENROUTER_MANAGEMENT_KEY" ]; then
+            echo "No keys configured — integration tests will no-op via skipIfNoKey()."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run integration tests
+        run: bun test tests/integration
