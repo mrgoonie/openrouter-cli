@@ -197,27 +197,23 @@ async function handleSend(args: Record<string, unknown>): Promise<void> {
 // Command definitions
 // ---------------------------------------------------------------------------
 
-const sendCommand = defineCommand({
-  meta: { description: 'Send a chat message and stream the response' },
-  args: sendArgs,
-  async run({ args }) {
-    await handleSend(args as Record<string, unknown>);
-  },
-});
-
-// `completion` is an alias for `send` — same handler, same args
-const completionCommand = defineCommand({
-  meta: { description: 'Alias for `chat send`' },
-  args: sendArgs,
-  async run({ args }) {
-    await handleSend(args as Record<string, unknown>);
-  },
-});
-
 export default defineCommand({
   meta: { description: 'Chat with AI models via OpenRouter' },
-  subCommands: {
-    send: sendCommand,
-    completion: completionCommand,
+  args: sendArgs,
+  async run({ args }) {
+    // Backward compat: allow `chat send <msg>` and `chat completion <msg>` forms.
+    // Citty's subcommand dispatch fires on the first positional regardless of
+    // flag values, so we emulate aliasing here: if the message is literally
+    // "send" or "completion" and there are additional raw positionals, shift.
+    const msg = args.message as string | undefined;
+    if ((msg === 'send' || msg === 'completion') && Array.isArray(args._)) {
+      const rest = (args._ as string[]).slice(1);
+      if (rest.length > 0) {
+        args.message = rest.join(' ');
+      } else {
+        args.message = undefined;
+      }
+    }
+    await handleSend(args as Record<string, unknown>);
   },
 });
