@@ -131,29 +131,31 @@ const main = defineCommand({
       resolverCtx,
     );
 
-    const hasSubcommand = process.argv
-      .slice(2)
-      .some((a) =>
-        [
-          'analytics',
-          'auth',
-          'chat',
-          'completion',
-          'config',
-          'credits',
-          'embeddings',
-          'generations',
-          'guardrails',
-          'keys',
-          'models',
-          'org',
-          'providers',
-          'rerank',
-          'responses',
-          'video',
-        ].includes(a),
-      );
-    if (!hasSubcommand) {
+    // Only print the version banner when no sub-command was invoked.
+    // citty still fires the parent `run` even when a sub-command matches,
+    // which would otherwise pollute stdout of pipe-safe sub-commands
+    // (config get / config path / config doctor --json).
+    const argv = process.argv.slice(2);
+    const firstPositional = argv.find((a) => !a.startsWith('-'));
+    const subCommandNames = new Set([
+      'analytics',
+      'auth',
+      'chat',
+      'completion',
+      'config',
+      'credits',
+      'embeddings',
+      'generations',
+      'guardrails',
+      'keys',
+      'models',
+      'org',
+      'providers',
+      'rerank',
+      'responses',
+      'video',
+    ]);
+    if (!firstPositional || !subCommandNames.has(firstPositional)) {
       console.log(`openrouter v${VERSION}`);
       console.log('Run `openrouter --help` for usage.');
     }

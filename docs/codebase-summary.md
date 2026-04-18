@@ -20,6 +20,11 @@ One file per noun. Each exports a `defineCommand` that groups verb subcommands.
 | `chat.ts` | `send`, `completion` | user key |
 | `completion.ts` | shell completion (bash/zsh/fish) | none |
 | `config.ts` | `get`, `set`, `unset`, `list`, `path`, `doctor` | none |
+|  |  |  |
+| **Behavior notes:** |  |  |
+| `unset` | Calls `rewriteConfigFile()` to permanently delete keys (no deep-merge resurrection). | — |
+| `doctor --json` | Envelope shape: `{schema_version, data: [{name, source, value, valid}], meta: {config_file, keychain}}`. | — |
+| `get`, `path`, `doctor --json` | Silence parent banner (no version output) when sub-command invoked. | — |
 | `credits.ts` | `show` | mgmt key |
 | `embeddings.ts` | `create` | user key |
 | `generations.ts` | `get` | user key |

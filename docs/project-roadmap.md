@@ -57,6 +57,15 @@ Focus: infrastructure use cases and enterprise deployments.
 
 ---
 
+## Recent Fixes (2026-04-18)
+
+### CI Fixes
+- **`config unset` semantics** — Now properly deletes keys instead of silently resurrecting via deep-merge; exposes `rewriteConfigFile()` in `src/lib/config/file.ts`.
+- **`config doctor --json` envelope** — Restructured `data` as array of `{name, source, value, valid}` rows; `config_file`/`keychain` status moved to `meta` with index signature support in `Meta` type.
+- **Pipe-safe sub-commands** — Version banner suppressed when sub-command invoked, prevents stdout pollution in `config get`, `config path`, `config doctor --json`.
+
+---
+
 ## Non-Goals (v1–v3)
 
 The following are explicitly out of scope to keep the CLI focused:
