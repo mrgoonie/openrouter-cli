@@ -15,7 +15,10 @@ const MAX_RETRIES = 3;
 const RETRYABLE = new Set([429, 502, 503, 504]);
 
 function buildUrl(base: string, path: string, query?: RequestOpts['query']): string {
-  const url = new URL(path, base.endsWith('/') ? base : `${base}/`);
+  // Concatenate rather than using `new URL(path, base)` — see client.ts for rationale.
+  const trimmedBase = base.replace(/\/+$/, '');
+  const trimmedPath = path.startsWith('/') ? path : `/${path}`;
+  const url = new URL(`${trimmedBase}${trimmedPath}`);
   if (query) {
     for (const [k, v] of Object.entries(query)) {
       if (v !== undefined) url.searchParams.set(k, String(v));

@@ -264,6 +264,10 @@ describe('resolveBaseUrl', () => {
 describe('resolveOutputMode', () => {
   const KEY = 'OPENROUTER_OUTPUT';
 
+  beforeEach(() => {
+    delete process.env[KEY];
+  });
+
   afterEach(() => {
     delete process.env[KEY];
   });
@@ -292,6 +296,10 @@ describe('resolveOutputMode', () => {
 
 describe('resolveTimeout', () => {
   const KEY = 'OPENROUTER_TIMEOUT';
+
+  beforeEach(() => {
+    delete process.env[KEY];
+  });
 
   afterEach(() => {
     delete process.env[KEY];
@@ -328,6 +336,16 @@ describe('resolveTimeout', () => {
 });
 
 describe('resolveSiteUrl', () => {
+  const KEY = 'OPENROUTER_SITE_URL';
+
+  beforeEach(() => {
+    delete process.env[KEY];
+  });
+
+  afterEach(() => {
+    delete process.env[KEY];
+  });
+
   test('returns undefined when no source', () => {
     const r = resolveSiteUrl(undefined, { dotenvMap: EMPTY_MAP, config: EMPTY_CONFIG });
     expect(r.value).toBeUndefined();
@@ -345,6 +363,16 @@ describe('resolveSiteUrl', () => {
 });
 
 describe('resolveAppName', () => {
+  const KEY = 'OPENROUTER_APP_NAME';
+
+  beforeEach(() => {
+    delete process.env[KEY];
+  });
+
+  afterEach(() => {
+    delete process.env[KEY];
+  });
+
   test('default is openrouter-cli', () => {
     const r = resolveAppName(undefined, { dotenvMap: EMPTY_MAP, config: EMPTY_CONFIG });
     expect(r.value).toBe('openrouter-cli');

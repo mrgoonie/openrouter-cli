@@ -63,7 +63,7 @@ const listCommand = defineCommand({
 
     // Pretty: table
     const rows = parsed.data.data.map((p) => ({
-      id: p.id,
+      slug: p.slug ?? '-',
       name: p.name ?? '-',
       status: p.status ?? '-',
       models_count: p.models_count ?? '-',
@@ -71,7 +71,7 @@ const listCommand = defineCommand({
 
     process.stdout.write(
       `${renderTable(rows, [
-        { key: 'id', header: 'ID', width: 24 },
+        { key: 'slug', header: 'Slug', width: 24 },
         { key: 'name', header: 'Name', width: 28 },
         { key: 'status', header: 'Status', width: 12 },
         { key: 'models_count', header: 'Models', width: 8 },

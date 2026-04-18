@@ -37,7 +37,12 @@ export type RequestResult<T> = {
 };
 
 function buildUrl(base: string, path: string, query?: RequestOpts['query']): string {
-  const url = new URL(path, base.endsWith('/') ? base : `${base}/`);
+  // Concatenate rather than using `new URL(path, base)` — a path starting with
+  // "/" would otherwise replace the base path (e.g. `/models` against
+  // `https://openrouter.ai/api/v1/` yields `https://openrouter.ai/models`).
+  const trimmedBase = base.replace(/\/+$/, '');
+  const trimmedPath = path.startsWith('/') ? path : `/${path}`;
+  const url = new URL(`${trimmedBase}${trimmedPath}`);
   if (query) {
     for (const [k, v] of Object.entries(query)) {
       if (v !== undefined) url.searchParams.set(k, String(v));
