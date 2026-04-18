@@ -1,6 +1,6 @@
 {
   "name": "openrouter-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "OpenRouter CLI — agent + human friendly wrapper for the full OpenRouter API",
   "type": "module",
   "bin": {

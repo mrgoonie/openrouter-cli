@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] — 2026-04-18
+
+### Added
+- Claude Code plugin + `openrouter` skill under `plugins/openrouter/` with marketplace manifest (`.claude-plugin/marketplace.json`). Teaches Claude Code and compatible agents how to drive the CLI with JSON envelopes, stable exit codes, NDJSON streaming, and common chat/embeddings/rerank/video workflows.
+
 ## [0.1.0] — 2026-04-17
 
 ### Fixed

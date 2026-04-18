@@ -1,8 +1,6 @@
 {
-  "data": {
-    "id": "vid_mock_1",
-    "status": "pending",
-    "created_at": "2026-04-17T12:00:00Z",
-    "model": "sora/mock-v1"
-  }
+  "id": "vid_mock_1",
+  "status": "pending",
+  "created_at": "2026-04-17T12:00:00Z",
+  "model": "sora/mock-v1"
 }
